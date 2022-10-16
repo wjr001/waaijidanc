@@ -45,7 +45,7 @@ bool HttpGetReq()
     SockAddr.sin_port = htons(80); //80端口表示http端口
     SockAddr.sin_family = AF_INET;
     SockAddr.sin_addr.s_addr = *((unsigned long*)host_info->h_addr); //请求服务器的地址 由host_info获取
-    cout << host_info->h_addr;
+    //cout << host_info->h_addr;
     //3.连接到服务器
     int flag_connect_socket = connect(m_socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
     if (flag_connect_socket != 0)
@@ -59,23 +59,22 @@ bool HttpGetReq()
     //const char* req_header = "GET /HTTP/1.1\r\n"; //请求头
     //const char* total_req_header = "Host:www.baidu.com\r\nConnection: close\r\n\r\n";
     //const char* all_req_header = "GET /index.php?a=a&b=b HTTP/1.1\r\nHost:192.168.31.220\r\nConnection: close\r\n\r\n";
-    const char* all_req_header = "GET /dictionary/word/suggestion?word=china&nums=5&ck=709a0db45332167b0e2ce1868b84773e&timestamp=1665831087773&client=6&uid=123123&key=1000006&is_need_mean=1&signature=da4551b49a3577a86c603acbde612f73 HTTP/1.1\r\n"
+    const char* all_req_header = "GET /dictionary/word/suggestion?word=china&nums=5&ck=709a0db45332167b0e2ce1868b84773e&timestamp=1665899263151&client=6&uid=123123&key=1000006&is_need_mean=1&signature=1742c201331e640b3fb83ea681ea0fcb HTTP/1.1\r\n"
         "Host: dict.iciba.com\r\n"
         "Accept: application/json, text/plain, */*\r\n"
-        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36\r\n"
-        "DNT: 1\r\n"
+        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.47\r\n"
         "Origin: http://www.iciba.com\r\n"
         "Referer: http://www.iciba.com/\r\n"
         "Accept-Encoding: gzip, deflate\r\n"
-        "Accept-Language: zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6\r\n"
-        "Connection: close\r\n";
-    //cout<<all_req_header;
+        "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6\r\n"
+        "Connection: close\r\n\r\n";
+    cout<<all_req_header;
     if (send(m_socket, all_req_header, strlen(all_req_header), 0) > 0)
     {
         //5.接收服务器响应的数据
-        char recvBuffer[10000];
+        char *recvBuffer=(char*) malloc(20480);
         BOOL bOptVal = TRUE;
-        int recvDataLength = recv(m_socket, recvBuffer, 10000, 0);
+        int recvDataLength = recv(m_socket, recvBuffer, 20480, 0);
         while (recvDataLength > 0)
         {
             ofstream temp;

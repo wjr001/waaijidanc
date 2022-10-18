@@ -18,5 +18,11 @@
     <ClCompile Include="waaijidanc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="http.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="analysis.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

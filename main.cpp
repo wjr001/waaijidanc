@@ -18,7 +18,16 @@ int main()
 {
 	//system("chcp 65001"); 
 	imgPross();
-	analysis((char*)"mix");
+	ifstream text;
+	text.open("text.txt", ios::in);
+	char* textTemp=(char*)malloc(64);
+	text >> textTemp;
+	while (!text.eof())
+	{
+		text >> textTemp;
+		analysis((char*)textTemp);
+	}
+	
 	return 0;
 
 }

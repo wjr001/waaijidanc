@@ -17,20 +17,33 @@ bool imgPross(const char* item);
 int main()
 {
 	//system("chcp 65001"); 
-	imgPross("eng");
+	imgPross("chi_sim");
 	ifstream text;
 	text.open("text.txt", ios::in);
-	string eng[2];
-	text >> eng[0];
+	string chi[2];
+	text >> chi[0];
 	while (!text.eof())
 	{
-		eng[1] = eng[0];
-		text >> eng[0];
-		if (((eng[0].compare("A"))==0)|| ((eng[0].compare("A.")) == 0))
+		chi[1] = chi[0];
+		text >> chi[0];
+		if (((chi[0].compare("A"))==0)|| ((chi[0].compare("A.")) == 0))
 		{
-			if (isalpha((eng[1])[0]))
+			if (((chi[1])[0]>=65 && (chi[1])[0]<=90)||((chi[1])[0]>=97 && (chi[1])[0]<=122))
 			{
-				analysis((char*)eng[1].c_str());
+				analysis((char*)chi[1].c_str());
+			}
+			else
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					chi[1] = chi[0];
+					text >> chi[0];
+					if (i%2==0)
+					{
+						cout<<"\n\n" << chi[1]<<" ";
+						analysis((char*)chi[0].c_str());
+					}
+				}
 			}
 			break;
 		}

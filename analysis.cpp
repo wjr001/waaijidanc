@@ -44,7 +44,7 @@ bool analysis(char* vocabulary) {
 	if (jsonReader.parse(jsonData, jsonValue))
 	{
 		Json::Value jsonMssage = jsonValue["message"][0];
-		cout << "\n" << UTF8ToGBK(jsonMssage["key"].asCString());
+		cout << UTF8ToGBK(jsonMssage["key"].asCString());
 		int i1 = 0;
 		int i2 = 0;
 		while (true)
@@ -55,7 +55,7 @@ bool analysis(char* vocabulary) {
 			{
 				break;
 			}
-			cout << "\n" << UTF8ToGBK(jsonMeans1["part"].asCString()) << " ";
+			cout << "\n   " << UTF8ToGBK(jsonMeans1["part"].asCString()) << " ";
 			while (true)
 			{
 				if (jsonMeans2[i2].asString().empty())

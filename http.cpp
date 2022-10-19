@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 using namespace std;
+#include"vld.h"
 #pragma comment(lib, "ws2_32.lib")
 #pragma warning(disable : 4996)
 #pragma warning(disable : 6387)
@@ -14,10 +15,11 @@ bool HttpGetReq(char* vocabulary)
     //1.初始化套接字库
     WORD socket_version = MAKEWORD(2, 2); //套接字版本
     WSADATA wsaData;
-    int flag_init_socket = WSAStartup(socket_version, &wsaData);
+    int flag_init_socket = WSAStartup(socket_version, &wsaData);//
     if (flag_init_socket != 0)
     {
         cout << "初始化套接字失败" << endl;
+        WSACleanup();
         return false;
     }
 
@@ -25,14 +27,16 @@ bool HttpGetReq(char* vocabulary)
     //AF_INET 指的是IPV4协议 //sock_stream 是有保障的(即能保证数据正确传送到对方)面向连接的SOCKET与tcp协议相对应
     //IPPROTO_TCP:传输层采用的协议类型
     //socket参数含义：1.网络层协议 2.传输数据的方式 3.传输层的协议类型
-    SOCKET m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    SOCKET m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//
     const char* host_url = "dict.iciba.com";
     struct hostent* host_info;
-    host_info = gethostbyname(host_url);
+    host_info = gethostbyname(host_url);//
     //host_info为空 说明没有该消息
     if (host_info == nullptr)
     {
         cout << "该主机url失败！" << endl;
+        closesocket(m_socket);
+        WSACleanup();
         return false;
     }
 
@@ -45,10 +49,12 @@ bool HttpGetReq(char* vocabulary)
     SockAddr.sin_addr.s_addr = *((unsigned long*)host_info->h_addr); //请求服务器的地址 由host_info获取
     //cout << host_info->h_addr;
     //3.连接到服务器
-    int flag_connect_socket = connect(m_socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
+    int flag_connect_socket = connect(m_socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));//
     if (flag_connect_socket != 0)
     {
         cout << "connect to server fail!" << endl;
+        closesocket(m_socket);
+        WSACleanup();
         return false;
     }
 
@@ -67,19 +73,19 @@ bool HttpGetReq(char* vocabulary)
         "Accept-Encoding: deflate\r\n"
         "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6\r\n"
         "Connection: close\r\n\r\n";
-    char* all_req_header = (char*)malloc(4096);
+    char* all_req_header = (char*)malloc(4096);//
     sprintf_s(all_req_header, 4096, "%s%s%s", pre_all_req_header, vocabulary, after_all_req_header);
     //cout<<all_req_header;
     if (send(m_socket, all_req_header, strlen(all_req_header), 0) > 0)
     {
+        free(all_req_header);
         //5.接收服务器响应的数据
         char* recvBuffer = (char*)malloc(40960);
         BOOL bOptVal = TRUE;
         int recvDataLength = recv(m_socket, recvBuffer, 40960, 0);
-        //long recvBufferSize = sizeof(recvBuffer);
         while (recvDataLength > 0)
         {
-            ofstream recvData; //接受到的数据
+            ofstream recvData; //接受到的数据//
             recvData.open("recvData.tmp", ios::out | ios::trunc);
             ofstream finalData; //最终需要的数据（json）
             finalData.open("finalData.json", ios::out | ios::trunc);
@@ -112,6 +118,7 @@ bool HttpGetReq(char* vocabulary)
             */
             recvData.close();
             finalData.close();
+            free(recvBuffer);
             break;
         }
 

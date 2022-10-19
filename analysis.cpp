@@ -6,6 +6,7 @@
 #include <sstream>
 using namespace std;
 #include <json/json.h>
+#include"vld.h"
 #pragma execution_character_set("utf-8")
 #pragma comment(lib, "ws2_32.lib")
 #pragma warning(disable : 4996)
@@ -38,21 +39,20 @@ bool analysis(char* vocabulary) {
 	//¿ªÊ¼½âÎö
 	Json::Value jsonValue;
 	Json::Reader jsonReader;
-	system("chcp 65001");
 	if (jsonReader.parse(jsonData, jsonValue))
 	{
 		Json::Value jsonMssage = jsonValue["message"][0];
+		cout << "\n" << jsonMssage["key"].asString();
 		int i1 = 0;
 		int i2 = 0;
-		cout << "\n" << vocabulary;
 		while (true)
 		{
 			Json::Value jsonMeans1 = jsonMssage["means"][i1];
-			if (jsonMeans1["part"].asString().empty())
+			Json::Value jsonMeans2 = jsonMeans1["means"];
+			if (jsonMeans1["part"].asString().empty() && jsonMeans2[0].asString().empty())
 			{
 				break;
 			}
-			Json::Value jsonMeans2 = jsonMeans1["means"];
 			cout << "\n" << jsonMeans1["part"].asString() << " ";
 			while (true)
 			{

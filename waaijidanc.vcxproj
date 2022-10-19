@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/execution-charset:gbk %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -138,7 +138,9 @@
   <ItemGroup>
     <ClCompile Include="analysis.cpp" />
     <ClCompile Include="http.cpp" />
-    <ClCompile Include="waaijidanc.cpp" />
+    <ClCompile Include="imgPross.cpp" />
+    <ClCompile Include="utf8ToGBK.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,6 +12,7 @@ using namespace std;
 #pragma warning(disable : 4996)
 #pragma warning(disable : 6387)
 
+string UTF8ToGBK(const char* src_str);
 bool HttpGetReq(char* vocabulary);
 
 
@@ -37,13 +38,13 @@ bool analysis(char* vocabulary) {
 	jsonFile.close();
 
 	//¿ªÊ¼½âÎö
-	SetConsoleOutputCP(CP_UTF8);
+	//SetConsoleOutputCP(CP_UTF8);
 	Json::Value jsonValue;
 	Json::Reader jsonReader;
 	if (jsonReader.parse(jsonData, jsonValue))
 	{
 		Json::Value jsonMssage = jsonValue["message"][0];
-		cout << "\n" << jsonMssage["key"].asString();
+		cout << "\n" << UTF8ToGBK(jsonMssage["key"].asCString());
 		int i1 = 0;
 		int i2 = 0;
 		while (true)
@@ -54,7 +55,7 @@ bool analysis(char* vocabulary) {
 			{
 				break;
 			}
-			cout << "\n" << jsonMeans1["part"].asString() << " ";
+			cout << "\n" << UTF8ToGBK(jsonMeans1["part"].asCString()) << " ";
 			while (true)
 			{
 				if (jsonMeans2[i2].asString().empty())
@@ -64,7 +65,7 @@ bool analysis(char* vocabulary) {
 				}
 				else
 				{
-					cout << jsonMeans2[i2].asString() << "; ";
+					cout << UTF8ToGBK(jsonMeans2[i2].asCString()) << "; ";
 				}
 				i2++;
 			}

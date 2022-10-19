@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 using namespace std;
-#include"vld.h"
+//#include"vld.h"
 #pragma comment(lib, "ws2_32.lib")
 #pragma warning(disable : 4996)
 #pragma warning(disable : 6387)

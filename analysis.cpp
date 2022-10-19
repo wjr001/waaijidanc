@@ -6,8 +6,8 @@
 #include <sstream>
 using namespace std;
 #include <json/json.h>
-#include"vld.h"
-#pragma execution_character_set("utf-8")
+//#include"vld.h"
+//#pragma execution_character_set("utf-8")
 #pragma comment(lib, "ws2_32.lib")
 #pragma warning(disable : 4996)
 #pragma warning(disable : 6387)
@@ -37,6 +37,7 @@ bool analysis(char* vocabulary) {
 	jsonFile.close();
 
 	//¿ªÊ¼½âÎö
+	SetConsoleOutputCP(CP_UTF8);
 	Json::Value jsonValue;
 	Json::Reader jsonReader;
 	if (jsonReader.parse(jsonData, jsonValue))

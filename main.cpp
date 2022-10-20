@@ -13,6 +13,7 @@ using namespace std;
 //bool HttpGetReq(char* vocabulary);
 bool analysis(char* vocabulary);
 bool imgPross(const char* item);
+string changeToLow(string str);
 
 int main()
 {
@@ -21,9 +22,12 @@ int main()
 	ifstream text;
 	text.open("text.txt", ios::in);
 	string chi[2];
+	string chiCom[64];
+	int num_chiCom = 0;
 	text >> chi[0];
 	while (!text.eof())
 	{
+		chiCom[num_chiCom] = chi[0];
 		chi[1] = chi[0];
 		text >> chi[0];
 		if (((chi[0].compare("A"))==0)|| ((chi[0].compare("A.")) == 0))
@@ -47,9 +51,31 @@ int main()
 			}
 			break;
 		}
+		num_chiCom++;
 	}
-	
-	
+	if (text.eof())
+	{
+		string eng;
+		text.close();
+		imgPross("eng");
+		ifstream text;
+		text.open("text.txt", ios::in);
+		while (!text.eof())
+		{
+			text >> eng;
+			for (int i = 0; i <= num_chiCom; i++)
+			{
+				bool a = (chiCom[i])[0] >= 65 && (chiCom[i])[0] <= 90 || (chiCom[i])[0] >= 97;
+				bool b = (changeToLow(eng)).compare(changeToLow(chiCom[i]));
+				if (a  && b)
+				{
+					analysis((char*)eng.c_str());
+					break;
+				}
+			}
+		}
+	}
+	text.close();
 	/*
 	while (!text.eof())
 	{

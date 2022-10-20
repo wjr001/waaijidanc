@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="analysis.cpp" />
+    <ClCompile Include="changeToLow.cpp" />
     <ClCompile Include="http.cpp" />
     <ClCompile Include="imgPross.cpp" />
     <ClCompile Include="utf8ToGBK.cpp" />

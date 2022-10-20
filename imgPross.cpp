@@ -26,6 +26,7 @@ bool imgPross(const char* item)
 	sprintf_s(output, 1024, "tesseract %s/after_pros.png %s/text -l %s", fileDir, fileDir,item);
 	cout << output;
 	system(output);
+	system("cls");
 	free(fileDir);
 	free(output);
 	return true;

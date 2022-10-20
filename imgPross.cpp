@@ -23,7 +23,7 @@ bool imgPross(const char* item,int input_thresh=60)
 	char* fileDir = (char*)malloc(260);
 	getcwd(fileDir, 260);
 	char* output = (char*)malloc(1024);
-	sprintf_s(output, 1024, "tesseract %s/after_pros.png %s/text -l %s", fileDir, fileDir,item);
+	sprintf_s(output, 1024, "%s/Tesseract-OCR/tesseract.exe %s/after_pros.png %s/text -l %s", fileDir,fileDir, fileDir,item);
 	cout << output;
 	system(output);
 	free(fileDir);

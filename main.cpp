@@ -20,13 +20,21 @@ int main()
 	//system("chcp 65001"); 
 	//output();
 	cout << "请确认您的手机已启用USB调试并已正确连接且已进入测试页面\n";
-	system("adb devices");
+	char* fileDir = (char*)malloc(260);
+	getcwd(fileDir, 260);
+	char* out = (char*)malloc(256);
+	sprintf_s(out, 256, "%s/platform-tools/adb.exe devices", fileDir);
+	system(out);
 	while (true)
 	{
 		system("pause");
-		system("adb shell screencap /sdcard/orgImg.png");
-		system("adb pull /sdcard/orgImg.png");
+		sprintf_s(out, 256, "%s/platform-tools/adb.exe shell screencap /sdcard/orgImg.png", fileDir);
+		system(out);
+		sprintf_s(out, 256, "%s/platform-tools/adb.exe pull /sdcard/orgImg.png", fileDir);
+		system(out);
 		output();
 	}
+	free(out);
+	free(fileDir);
 	return 0;
 }

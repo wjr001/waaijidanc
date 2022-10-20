@@ -36,7 +36,6 @@ bool analysis(char* vocabulary) {
 	}
 	//cout << jsonData;
 	jsonFile.close();
-
 	//开始解析
 	//SetConsoleOutputCP(CP_UTF8);
 	Json::Value jsonValue;
@@ -44,38 +43,47 @@ bool analysis(char* vocabulary) {
 	if (jsonReader.parse(jsonData, jsonValue))
 	{
 		Json::Value jsonMssage = jsonValue["message"][0];
-		cout << UTF8ToGBK(jsonMssage["key"].asCString());
-		int i1 = 0;
-		int i2 = 0;
-		while (true)
+		if (jsonMssage["key"].isNull())
 		{
-			Json::Value jsonMeans1 = jsonMssage["means"][i1];
-			Json::Value jsonMeans2 = jsonMeans1["means"];
-			if (jsonMeans1["part"].asString().empty() && jsonMeans2[0].asString().empty())
-			{
-				break;
-			}
-			cout << "\n   " << UTF8ToGBK(jsonMeans1["part"].asCString()) << " ";
+			cout << "该词不存在\n";
+		}
+		else
+		{
+			cout << UTF8ToGBK(jsonMssage["key"].asCString());
+			int i1 = 0;
+			int i2 = 0;
 			while (true)
 			{
-				if (jsonMeans2[i2].asString().empty())
+				Json::Value jsonMeans1 = jsonMssage["means"][i1];
+				Json::Value jsonMeans2 = jsonMeans1["means"];
+				if (jsonMeans1["part"].asString().empty() && jsonMeans2[0].asString().empty())
 				{
-					i2 = 0;
 					break;
 				}
-				else
+				cout << "\n    " << UTF8ToGBK(jsonMeans1["part"].asCString()) << " ";
+				while (true)
 				{
-					cout << UTF8ToGBK(jsonMeans2[i2].asCString()) << "; ";
+					if (jsonMeans2[i2].asString().empty())
+					{
+						i2 = 0;
+						break;
+					}
+					else
+					{
+						cout << UTF8ToGBK(jsonMeans2[i2].asCString()) << "; ";
+					}
+					i2++;
 				}
-				i2++;
+				i1++;
 			}
-			i1++;
+			cout << "\n";
+			return true;
 		}
-		return true;
+
 	}
 	else
 	{
-		cout << "解析json失败";
+		cout << "解析json失败\n";
 		return false;
 	}
 
